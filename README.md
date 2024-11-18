@@ -1,2 +1,2 @@
-# air-draft-issue
+# aic-draft-issue
 Example of Programmatic Draft Issue
