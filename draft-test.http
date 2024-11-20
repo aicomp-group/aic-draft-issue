@@ -1,0 +1,153 @@
+@host=https://aic-dev-dev-aic-draft-issue-srv.cfapps.us10.hana.ondemand.com
+@local-host=http://localhost:4004
+@auth-host=https://aic-dev.authentication.us10.hana.ondemand.com
+@client-id=sb-aic-draft-issue-aic-dev-dev!t213793
+
+# ==================== REMOTE TEST STEPS ====================
+
+### Get Auth Token
+### Remote Access User Token Call
+# @name authRequest
+# @prompt client-secret Client secret for token request
+# @prompt btp-username BTP username for token request
+# @prompt btp-password password for token request
+POST {{auth-host}}/oauth/token
+Accept: application/json;charset=utf8
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password
+&client_id={{client-id}}
+&client_secret={{client-secret}}
+&response_type=token
+&username={{btp-username}}
+&password={{btp-password}}
+
+###
+
+@auth-token={{authRequest.response.body.access_token}}
+
+
+### Create Draft
+# @name createDraft
+POST {{host}}/odata/v4/control/createDraft
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}
+
+{}
+
+###
+
+@widget-id={{createDraft.response.body.widgetID}}
+@customer-id={{createDraft.response.body.customerID}}
+
+### Check Widget Draft Data
+
+GET {{host}}/odata/v4/widgets/Widgets(ID={{widget-id}},IsActiveEntity=false)?$expand=DraftAdministrativeData,components
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}
+
+### Check Customer Draft Data
+
+GET {{host}}/odata/v4/customers/Customers(ID={{customer-id}},IsActiveEntity=false)?$expand=DraftAdministrativeData
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}
+
+### Save Draft
+
+POST {{host}}/odata/v4/control/saveDraft
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}
+
+{ "widgetID": "{{widget-id}}", "customerID": "{{customer-id}}" }
+
+
+### Check Widget Active Data
+
+GET {{host}}/odata/v4/widgets/Widgets(ID={{widget-id}},IsActiveEntity=true)?$expand=DraftAdministrativeData,components
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}
+
+### Check Customer Active Data
+
+GET {{host}}/odata/v4/customers/Customers(ID={{customer-id}},IsActiveEntity=true)?$expand=DraftAdministrativeData
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}
+
+### Edit Draft
+
+POST {{host}}/odata/v4/control/editDraft
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}
+
+{ "widgetID": "{{widget-id}}", "customerID": "{{customer-id}}" }
+
+
+### Discard Draft
+
+POST {{host}}/odata/v4/control/discardDraft
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}
+
+{ "widgetID": "{{widget-id}}", "customerID": "{{customer-id}}" }
+
+
+
+
+# ==================== LOCAL TEST STEPS ====================
+
+
+
+### Create Draft
+# @name createDraft
+POST {{local-host}}/odata/v4/control/createDraft
+Content-Type: application/json
+
+{}
+
+###
+
+@local-widget-id={{createDraft.response.body.widgetID}}
+@local-customer-id={{createDraft.response.body.customerID}}
+
+### Check Widget Draft Data
+
+GET {{local-host}}/odata/v4/widgets/Widgets(ID={{local-widget-id}},IsActiveEntity=false)?$expand=DraftAdministrativeData,components
+Content-Type: application/json
+
+### Check Customer Draft Data
+
+GET {{local-host}}/odata/v4/customers/Customers(ID={{local-customer-id}},IsActiveEntity=false)?$expand=DraftAdministrativeData
+Content-Type: application/json
+
+### Save Draft
+
+POST {{local-host}}/odata/v4/control/saveDraft
+Content-Type: application/json
+
+{ "widgetID": "{{local-widget-id}}", "customerID": "{{local-customer-id}}" }
+
+
+### Check Widget Active Data
+
+GET {{local-host}}/odata/v4/widgets/Widgets(ID={{local-widget-id}},IsActiveEntity=true)?$expand=DraftAdministrativeData,components
+Content-Type: application/json
+
+### Check Customer Active Data
+
+GET {{local-host}}/odata/v4/customers/Customers(ID={{local-customer-id}},IsActiveEntity=true)?$expand=DraftAdministrativeData
+Content-Type: application/json
+
+### Edit Draft
+
+POST {{local-host}}/odata/v4/control/editDraft
+Content-Type: application/json
+
+{ "widgetID": "{{local-widget-id}}", "customerID": "{{local-customer-id}}" }
+
+
+### Discard Draft
+
+POST {{local-host}}/odata/v4/control/discardDraft
+Content-Type: application/json
+
+{ "widgetID": "{{local-widget-id}}", "customerID": "{{local-customer-id}}" }

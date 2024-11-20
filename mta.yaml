@@ -1,0 +1,59 @@
+---
+_schema-version: 3.3.0
+ID: aic-draft-issue
+version: 1.0.0
+description: "Aicomp Draft Issue"
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+modules:
+  - name: aic-draft-issue-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      buildpack: nodejs_buildpack
+      readiness-health-check-type: http
+      readiness-health-check-http-endpoint: /health
+      memory: 256MB
+      disk-quota: 512MB
+    build-parameters:
+      builder: npm
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: aic-draft-issue-db
+      - name: aic-draft-issue-auth
+
+  - name: aic-draft-issue-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+      memory: 256MB
+      disk-quota: 512MB
+    requires:
+      - name: aic-draft-issue-db
+
+resources:
+  - name: aic-draft-issue-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+
+  - name: aic-draft-issue-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: aic-draft-issue-${org}-${space}
+        tenant-mode: dedicated

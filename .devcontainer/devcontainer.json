@@ -1,0 +1,38 @@
+{
+  "name": "Aicomp Draft Issue",
+  "build": {
+      "dockerfile": "Dockerfile",
+      "args": {
+          "VARIANT": "18"
+      }
+  },
+  "customizations": {
+      "vscode": {
+          "extensions": [
+              "sapse.vscode-cds",
+              "dbaeumer.vscode-eslint",
+              "humao.rest-client",
+              "qwtel.sqlite-viewer",
+              "mechatroner.rainbow-csv",
+              "ms-azuretools.vscode-docker",
+              "esbenp.prettier-vscode",
+              "qwtel.sqlite-viewer",
+              "eamodio.gitlens",
+              "github.copilot",
+              "github.vscode-pull-request-github",
+              "github.copilot-chat",
+              "SAPSE.sap-ux-application-modeler-extension",
+              "SAPSE.sap-ux-service-modeler-extension",
+              "SAPSE.sap-ux-help-extension",
+              "SAPSE.sap-ux-fiori-tools-extension-pack",
+              "SAPSE.sap-ux-annotation-modeler-extension",
+              "SAPOSS.vscode-ui5-language-assistant",
+              "redhat.vscode-xml"
+          ]
+      }
+  },
+  "forwardPorts": [
+      4004
+  ],
+  "remoteUser": "node"
+}
