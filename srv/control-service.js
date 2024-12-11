@@ -8,7 +8,7 @@ module.exports = cds.service.impl(async (srv) => {
 
   srv.on("createDraft", async (req) => {
     // Create a new draft for a widget
-    const { ID: widgetID } = await widgetsService.send({ query: INSERT.into(Widgets).entries({}), event: "NEW" })
+    const { ID: widgetID } = await widgetsService.new(Widgets, {})
 
     await UPDATE.entity(Widgets.drafts, { ID: widgetID }).with({ name: "widget-01", description: "Widget 1" })
 
@@ -22,7 +22,7 @@ module.exports = cds.service.impl(async (srv) => {
     await INSERT.into(Components.drafts).entries(componentEntries)
 
     // Create a new draft for a customer
-    const { ID: customerID } = await customersService.send({ query: INSERT.into(Customers).entries({}), event: "NEW" })
+    const { ID: customerID } = await customersService.new(Customers, {})
 
     await UPDATE.entity(Customers.drafts, { ID: customerID }).with({ name: "cust-01", description: "Customer 1" })
 
@@ -32,30 +32,17 @@ module.exports = cds.service.impl(async (srv) => {
   srv.on("saveDraft", async (req) => {
     const { widgetID, customerID } = req.data
 
-    await widgetsService.send({ event: "draftPrepare", query: SELECT.from(Widgets.drafts).where({ ID: widgetID, IsActiveEntity: false }) })
-    await widgetsService.send({ event: "draftActivate", query: SELECT.from(Widgets.drafts).where({ ID: widgetID, IsActiveEntity: false }) })
+    await widgetsService.save(Widgets, { ID: widgetID })
 
-    await customersService.send({ event: "draftPrepare", query: SELECT.from(Customers.drafts).where({ ID: customerID, IsActiveEntity: false }) })
-    await customersService.send({ event: "draftActivate", query: SELECT.from(Customers.drafts).where({ ID: customerID, IsActiveEntity: false }) })
+    await customersService.save(Customers, { ID: customerID })
+
   })
 
   srv.on("editDraft", async (req) => {
     const { widgetID, customerID } = req.data
 
-    // Create Edit draft for the widget
-    const requestWidget = new cds.Request({
-      event: "draftEdit",
-      query: SELECT.from(Widgets).where({ ID: widgetID, IsActiveEntity: true }),
-      res: { set: () => {}, status: () => {} },
-    })
-    await widgetsService.send(requestWidget)
-
-    const requestCustomer = new cds.Request({
-      event: "draftEdit",
-      query: SELECT.from(Customers).where({ ID: customerID, IsActiveEntity: true }),
-      res: { set: () => {}, status: () => {} },
-    })
-    await customersService.send(requestCustomer)
+    await widgetsService.edit(Widgets, { ID: widgetID })
+    await customersService.edit(Customers, { ID: customerID })
 
     const widgetDraft = await SELECT.one.from(Widgets.drafts).where({ ID: widgetID })
     if (widgetDraft) {
@@ -75,7 +62,8 @@ module.exports = cds.service.impl(async (srv) => {
   srv.on("discardDraft", async (req) => {
     const { widgetID, customerID } = req.data
 
-    await widgetsService.send({ event: "CANCEL", query: DELETE.from(Widgets.drafts).where({ ID: widgetID, IsActiveEntity: false }) })
-    await customersService.send({ event: "CANCEL", query: DELETE.from(Customers.drafts).where({ ID: customerID, IsActiveEntity: false }) })
+    await widgetsService.cancel(Widgets.drafts, { ID: widgetID })
+    await customersService.cancel(Customers.drafts, { ID: customerID })
+
   })
 })
