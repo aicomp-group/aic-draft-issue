@@ -1,25 +1,14 @@
-# Getting Started
+# Abstract
 
-Welcome to your new project.
+This is a CAP project to highlight the issues with programmatic draft control in CDS.
 
-It contains these folders and files, following our recommended project layout:
+While this feature is in Beta, we were able to get it to work as expected using version 8.5.1, but are now having issues getting it to work with any minor release after 8.5.1.
 
-File or Folder | Purpose
----------|----------
-`app/` | content for UI frontends goes here
-`db/` | your domain models and data go here
-`srv/` | your service models and code go here
-`package.json` | project metadata and configuration
-`readme.md` | this getting started guide
+Programmatic control of draft is documented at https://cap.cloud.sap/docs/node.js/fiori#programmatic-invocation-of-draft-actions
 
 
-## Next Steps
+## To Replicate Issues
 
 - Open a new terminal and run `cds watch`
-- (in VS Code simply choose _**Terminal** > Run Task > cds watch_)
-- Start adding content, for example, a [db/schema.cds](db/schema.cds).
+- Run local test scripts in draf-test.http
 
-
-## Learn More
-
-Learn more at https://cap.cloud.sap/docs/get-started/.
