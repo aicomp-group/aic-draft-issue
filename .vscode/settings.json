@@ -1,6 +1,9 @@
 {
   "prettier.printWidth": 160,
   "prettier.semi": false,
+  "prettier.singleQuote": true, // Use single quotes instead of double quotes
+	"prettier.bracketSpacing": true, // Print spaces between brackets in object literals
+	"prettier.trailingComma": "es5", // enforce trailing commas
   "js/ts.implicitProjectConfig.checkJs": true,
   "eslint.validate": [
     "cds",

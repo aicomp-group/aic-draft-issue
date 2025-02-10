@@ -92,9 +92,7 @@ Authorization: Bearer {{auth-token}}
 
 
 
-
 # ==================== LOCAL TEST STEPS ====================
-
 
 
 ### Create Draft
@@ -110,17 +108,14 @@ Content-Type: application/json
 @local-customer-id={{createDraft.response.body.customerID}}
 
 ### Check Widget Draft Data
-
 GET {{local-host}}/odata/v4/widgets/Widgets(ID={{local-widget-id}},IsActiveEntity=false)?$expand=DraftAdministrativeData,components
 Content-Type: application/json
 
 ### Check Customer Draft Data
-
 GET {{local-host}}/odata/v4/customers/Customers(ID={{local-customer-id}},IsActiveEntity=false)?$expand=DraftAdministrativeData
 Content-Type: application/json
 
 ### Save Draft
-
 POST {{local-host}}/odata/v4/control/saveDraft
 Content-Type: application/json
 
@@ -128,17 +123,14 @@ Content-Type: application/json
 
 
 ### Check Widget Active Data
-
 GET {{local-host}}/odata/v4/widgets/Widgets(ID={{local-widget-id}},IsActiveEntity=true)?$expand=DraftAdministrativeData,components
 Content-Type: application/json
 
 ### Check Customer Active Data
-
 GET {{local-host}}/odata/v4/customers/Customers(ID={{local-customer-id}},IsActiveEntity=true)?$expand=DraftAdministrativeData
 Content-Type: application/json
 
 ### Edit Draft
-
 POST {{local-host}}/odata/v4/control/editDraft
 Content-Type: application/json
 
@@ -146,7 +138,6 @@ Content-Type: application/json
 
 
 ### Discard Draft
-
 POST {{local-host}}/odata/v4/control/discardDraft
 Content-Type: application/json
 
