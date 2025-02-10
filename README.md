@@ -11,6 +11,8 @@ Programmatic control of draft is documented at https://cap.cloud.sap/docs/node.j
 
 ## To Replicate Issues
 
+- run `npm install` on root directory of project
 - Open a new terminal and run `cds watch`
-- Run local test scripts in draf-test.http
+- Run local test scripts in draft-test.http
+
 
