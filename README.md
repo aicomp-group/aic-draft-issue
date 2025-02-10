@@ -15,4 +15,6 @@ Programmatic control of draft is documented at https://cap.cloud.sap/docs/node.j
 - Open a new terminal and run `cds watch`
 - Run local test scripts in draft-test.http
 
+## Working Branch
 
+Branch `main` shows where the application is failing using version 8.7.0 while branch `working` shows the application successfully working using 8.5.1
