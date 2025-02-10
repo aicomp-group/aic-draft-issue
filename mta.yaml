@@ -42,12 +42,14 @@ modules:
       - name: aic-draft-issue-db
 
 resources:
+  # HANA Service
   - name: aic-draft-issue-db
     type: com.sap.xs.hdi-container
     parameters:
       service: hana
       service-plan: hdi-shared
 
+  # XSUAA Service
   - name: aic-draft-issue-auth
     type: org.cloudfoundry.managed-service
     parameters:
