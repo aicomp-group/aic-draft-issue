@@ -8,7 +8,7 @@
   "eslint.validate": ["cds", "csn", "csv", "csv (semicolon)", "tab", "tsv"],
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {
-      "text": "Commit messages should follow the Smart Commit syntax. For example: 'JIRA-123 #comment This is a commit message'."
-    }
+			"text": "Include the git branch name at the end of the commit message.  For example, if the git branch name is 'XXX-1234', then ' - XXX-1234' should be placed at the end of the commit message."
+		}
   ]
 }

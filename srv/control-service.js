@@ -14,6 +14,7 @@ module.exports = cds.service.impl(async (srv) => {
 
     const { DraftAdministrativeData_DraftUUID } = await SELECT.one.from(Widgets.drafts).columns(`DraftAdministrativeData_DraftUUID`).where({ ID: widgetID })
 
+    // TODO: Add additional components
     const componentEntries = [
       { name: "comp-01", description: "Component 1", quantity: 2, widget_ID: widgetID, DraftAdministrativeData_DraftUUID },
       { name: "comp-02", description: "Component 2", quantity: 4, widget_ID: widgetID, DraftAdministrativeData_DraftUUID },
@@ -24,6 +25,7 @@ module.exports = cds.service.impl(async (srv) => {
     // Create a new draft for a customer
     const { ID: customerID } = await customersService.new(Customers, {})
 
+    // FIXME: Add more descriptive customer name and description
     await UPDATE.entity(Customers.drafts, { ID: customerID }).with({ name: "cust-01", description: "Customer 1" })
 
     return { widgetID, customerID }

@@ -27,7 +27,8 @@
               "SAPSE.sap-ux-fiori-tools-extension-pack",
               "SAPSE.sap-ux-annotation-modeler-extension",
               "SAPOSS.vscode-ui5-language-assistant",
-              "redhat.vscode-xml"
+              "redhat.vscode-xml",
+              "gruntfuggly.todo-tree"
           ]
       }
   },
