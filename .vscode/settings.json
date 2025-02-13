@@ -7,7 +7,6 @@
   "js/ts.implicitProjectConfig.checkJs": true,
   "eslint.validate": ["cds", "csn", "csv", "csv (semicolon)", "tab", "tsv"],
   "github.copilot.chat.commitMessageGeneration.instructions": [
-    { "text": "The Jira Issue is the git branch name.  For example, if the git branch name is 'JIRA-123', the Jira Issue is `JIRA-123'" },
     {
       "text": "Commit messages should follow the Smart Commit syntax. For example: 'JIRA-123 #comment This is a commit message'."
     }
