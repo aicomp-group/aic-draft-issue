@@ -45,9 +45,9 @@ module.exports = cds.service.impl(async (srv) => {
 
     await widgetsService.edit(Widgets, { ID: widgetID })
     await customersService.edit(Customers, { ID: customerID })
-
     const widgetDraft = await SELECT.one.from(Widgets.drafts).where({ ID: widgetID })
     if (widgetDraft) {
+      //REVISIT: Using coonsole log?
       console.log(`Widget draft found for ID: ${widgetID}`)
     } else {
       req.error(500, `Widget draft NOT found for ID: ${widgetID}`)
